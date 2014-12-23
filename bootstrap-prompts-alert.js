@@ -1,28 +1,38 @@
 window._originalAlert = window.alert;
-window.alert = function(text) {
-    var bootStrapAlert = function() {
+window.alert = function(text, obj) {
+    var bootStrapAlert = function() {     
         if(! $.fn.modal.Constructor)
             return false;
         if($('#windowAlertModal').length == 1)
-            return true;
-        $('body').append(' \
-    <div id="windowAlertModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true"> \
-      <div class="modal-body"> \
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-        <p> alert text </p> \
-      </div> \
-      <div class="modal-footer"> \
-        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button> \
-      </div> \
-    </div> \
-    ');
-        return true;
+            return true;        
+        $('.container').append(' \
+        <div id="windowAlertModal" class="modal fade bs-example-modal-sm" aria-labelledby="mySmallModalLabel" tabindex="-1" role="dialog" aria-hidden="true"> \
+        <div class="modal-dialog modal-sm"> \
+          <div class="modal-content"> \
+              <div class="modal-body"> \
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                <p> alert text </p> \
+              </div> \
+              <div class="modal-footer"> \
+                <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Fechar</button> \
+              </div> \
+          </div> \
+        </div> \
+        </div> \
+      ');     
+    return true;    
     }
-    if ( bootStrapAlert() ){
-        $('#windowAlertModal .modal-body p').text(text);
-        $('#windowAlertModal').modal();
-    }  else {
-        console.log('bootstrap was not found');
+    if ( bootStrapAlert() ){      
+      $('#windowAlertModal .modal-body p').text(text);
+      $('#windowAlertModal').modal();
+
+      if(obj && obj.jquery){
+        $('#windowAlertModal').on('hidden.bs.modal', function () {
+          obj.focus();
+        });
+      }
+
+    }  else {        
         window._originalAlert(text);
     }
 }
@@ -32,15 +42,19 @@ window.confirm = function(text, cb) {
       if($('#windowConfirmModal').length == 1)
         return true;
       $('body').append(' \
-        <div id="windowConfirmModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true"> \
-          <div class="modal-body"> \
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
-            <p> alert text </p> \
-          </div> \
-          <div class="modal-footer"> \
-            <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button> \
-            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Ok</button> \
-          </div> \
+        <div id="windowConfirmModal" class="modal fade bs-example-modal-sm" aria-labelledby="mySmallModalLabel" tabindex="-1" role="dialog" aria-hidden="true"> \
+      <div class="modal-dialog modal-sm"> \
+        <div class="modal-content"> \
+                <div class="modal-body"> \
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> \
+                    <p> alert text </p> \
+                </div> \
+                <div class="modal-footer"> \
+                  <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancelar</button> \
+                  <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Ok</button> \
+                </div> \
+        </div> \
+      </div> \
         </div> \
       ');
     }
