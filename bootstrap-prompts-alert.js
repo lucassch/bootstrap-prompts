@@ -5,7 +5,7 @@ window.alert = function(text, obj) {
             return false;
         if($('#windowAlertModal').length == 1)
             return true;        
-        $('.container').append(' \
+        $('.container, .container-fluid').append(' \
         <div id="windowAlertModal" class="modal fade bs-example-modal-sm" aria-labelledby="mySmallModalLabel" tabindex="-1" role="dialog" aria-hidden="true"> \
         <div class="modal-dialog modal-sm"> \
           <div class="modal-content"> \
